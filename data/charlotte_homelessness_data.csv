@@ -1,0 +1,25 @@
+dataset,period,measure,value,notes,source_url
+Point-in-Time Count,2024-01,total,2095,"One-night January count; 193 families, 77 youth (18-24)",https://news.mecknc.gov/everybody-counts-charlotte-volunteers-and-donations-needed-point-time-count
+Point-in-Time Count,2024-01,unsheltered,384,,https://news.mecknc.gov/2784-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+Point-in-Time Count,2024-01,sheltered,1711,Derived: total minus unsheltered,
+Point-in-Time Count,2025-01,total,2101,"152 families with minor children, 76 unaccompanied youth (18-24)",https://news.mecknc.gov/everybody-counts-charlotte-volunteers-and-donations-needed-point-time-count-2026
+Point-in-Time Count,2025-01,unsheltered,444,"421 households; 116 newly identified; highest since 2010",https://news.mecknc.gov/point-time-count-reveals-faces-homelessness-amidst-growing-needs
+Point-in-Time Count,2025-01,sheltered,1657,1320 households,https://news.mecknc.gov/point-time-count-reveals-faces-homelessness-amidst-growing-needs
+Point-in-Time Count,2026-01,total,2018,,https://www.axios.com/local/charlotte/2026/05/11/charlotte-homelessness-climbs-again-in-2026
+Point-in-Time Count,2026-01,unsheltered,499,"29 unaccompanied youth, 25 veterans",https://www.axios.com/local/charlotte/2026/05/11/charlotte-homelessness-climbs-again-in-2026
+Point-in-Time Count,2026-01,sheltered,1519,"257 children under 18 in shelters; 2 shelter programs closed, 1 reduced capacity",https://www.axios.com/local/charlotte/2026/05/11/charlotte-homelessness-climbs-again-in-2026
+Point-in-Time Count,2020-01,unsheltered,214,Pre-pandemic,https://news.mecknc.gov/news/2700-neighbors-need-county-releases-housing-homelessness-report
+Point-in-Time Count,2023-01,unsheltered,288,,https://news.mecknc.gov/news/2700-neighbors-need-county-releases-housing-homelessness-report
+One Number,2022-06,people actively homeless,2428,By-name list in HMIS,https://news.mecknc.gov/news/2700-neighbors-need-county-releases-housing-homelessness-report
+One Number,2023-06,people actively homeless,2704,,https://news.mecknc.gov/news/2700-neighbors-need-county-releases-housing-homelessness-report
+One Number,2024-06,people actively homeless,2784,,https://news.mecknc.gov/2784-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+One Number,2025-06,people actively homeless,2404,Down 14% year over year,https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+One Number,2025-09,people actively homeless,2430,As of Sept. 30 2025,https://news.mecknc.gov/community-conversation-homelessness-kicks-2026-point-time-count
+Evictions,2024,cases filed,46026,29716 granted,https://www.wsoctv.com/news/local/evictions-surge-mecklenburg-county-prompting-urgent-calls-housing-support/PQLYXXN62VB53PG6R7K5QVMVK4
+Evictions,2025,cases filed,52000,"Reported as 'more than 52,000' - highest on record",https://legalaidnc.org/2026/01/08/a-lifeline-in-the-mecklenburg-county-courthouse/
+Housing,2015-2024,share of low-cost rental stock lost,77,Percent,https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+Housing,2025 report,rental unit gap at or below 30% AMI,32601,Units,https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+Housing,2025 report,renters cost-burdened,50,"Percent ('half of all renters')",https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+Equity,2025 report,Black share of county population,29,Percent,https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+Equity,2025 report,Black share of people experiencing homelessness,74,Percent,https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report
+Inflow,2024,change in first-time homelessness,11,Percent increase,https://news.mecknc.gov/2404-neighbors-need-mecklenburg-county-releases-housing-and-homelessness-report

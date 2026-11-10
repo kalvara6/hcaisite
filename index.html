@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rare, Brief, Non-Recurring — Human-Centered AI for Homelessness in Charlotte</title>
+  <meta name="description" content="A data-driven map of what drives homelessness in Charlotte-Mecklenburg and where human-centered AI can help — with people, not instead of them.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Help banner: the first thing anyone in crisis sees -->
+  <aside class="help-banner" aria-label="Get help now">
+    <div class="wrap">
+      <strong>Need help now?</strong>
+      Dial <a href="tel:211">2-1-1</a> (24/7) ·
+      Coordinated Entry <a href="tel:7042849665">704-284-9665</a> ·
+      Eviction legal help <a href="tel:18772016426">1-877-201-6426</a> ·
+      Emergency <a href="tel:911">911</a>
+    </div>
+  </aside>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top">Home<span>Map</span> CLT</a>
+      <nav aria-label="Sections">
+        <a href="#data">The data</a>
+        <a href="#neighborhoods">Neighborhood map</a>
+        <a href="#journey">The journey</a>
+        <a href="#map">Solution map</a>
+        <a href="#principles">Human-centered AI</a>
+        <a href="#prototype">Prototype</a>
+        <a href="#sources">Sources</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <p class="eyebrow">Charlotte-Mecklenburg · Human-Centered AI class project</p>
+        <h1>Homelessness should be <em>rare</em>, <em>brief</em>, and <em>non-recurring</em>.</h1>
+        <p class="lede">
+          That's Charlotte-Mecklenburg's own goal. This site uses public data to show what is
+          pushing neighbors out of housing, then maps where AI — including large language models —
+          can help the people and caseworkers already doing this work. The rule we followed:
+          <strong>AI supports human judgment and dignity; it never replaces them.</strong>
+        </p>
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+    </section>
+
+    <!-- ============ DATA ============ -->
+    <section id="data" class="section">
+      <div class="wrap">
+        <p class="eyebrow">01 · The data</p>
+        <h2>What the numbers say</h2>
+        <p class="section-lede">
+          Charlotte-Mecklenburg measures homelessness two ways. The <strong>Point-in-Time (PIT) Count</strong>
+          is a one-night January snapshot required by HUD. The <strong>One Number</strong> is a running count
+          of everyone actively experiencing homelessness in the county's data system. They answer different
+          questions, so we show them separately.
+        </p>
+
+        <div class="chart-grid">
+          <figure class="chart-card" id="chartUnsheltered">
+            <figcaption>
+              <h3>People sleeping outside keep increasing</h3>
+              <p>Unsheltered people found during the January Point-in-Time Count</p>
+            </figcaption>
+            <div class="chart" role="img" aria-label="Line chart of unsheltered homelessness: 214 in 2020, 288 in 2023, 384 in 2024, 444 in 2025, 499 in 2026"></div>
+            <p class="chart-note">2021–2022 omitted: counts used different, pandemic-era methods.</p>
+          </figure>
+
+          <figure class="chart-card" id="chartPIT">
+            <figcaption>
+              <h3>Fewer shelter beds, more people outside</h3>
+              <p>Point-in-Time Count, sheltered vs. unsheltered</p>
+            </figcaption>
+            <div class="legend" aria-hidden="true">
+              <span><i class="sw sw-1"></i>Sheltered</span>
+              <span><i class="sw sw-2"></i>Unsheltered</span>
+            </div>
+            <div class="chart" role="img" aria-label="Stacked bar chart. 2024: 1,711 sheltered, 384 unsheltered. 2025: 1,657 sheltered, 444 unsheltered. 2026: 1,519 sheltered, 499 unsheltered."></div>
+            <p class="chart-note">The 2026 sheltered drop reflects lost shelter capacity, not less need.</p>
+          </figure>
+
+          <figure class="chart-card" id="chartOneNumber">
+            <figcaption>
+              <h3>Total homelessness: the “One Number”</h3>
+              <p>People actively experiencing homelessness, measured each June</p>
+            </figcaption>
+            <div class="chart" role="img" aria-label="Bar chart of the One Number: 2,428 in June 2022, 2,704 in June 2023, 2,784 in June 2024, 2,404 in June 2025"></div>
+            <p class="chart-note">Down 14% in 2025 — but first-time homelessness rose 11%.</p>
+          </figure>
+
+          <figure class="chart-card" id="chartEvictions">
+            <figcaption>
+              <h3>Eviction filings hit a record</h3>
+              <p>Eviction cases filed in Mecklenburg County</p>
+            </figcaption>
+            <div class="chart" role="img" aria-label="Bar chart of eviction filings: 46,026 in 2024 and more than 52,000 in 2025"></div>
+            <p class="chart-note">2025 is reported as “more than 52,000”; shown at 52,000.</p>
+          </figure>
+        </div>
+
+        <details class="table-view">
+          <summary>View all chart data as a table</summary>
+          <div id="dataTables"></div>
+          <p><a class="btn" href="data/charlotte_homelessness_data.csv" download>Download the dataset (CSV)</a></p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ NEIGHBORHOOD MAP ============ -->
+    <section id="neighborhoods" class="section alt">
+      <div class="wrap">
+        <p class="eyebrow">02 · Neighborhood map</p>
+        <h2>Where housing pressure is concentrated</h2>
+        <p class="section-lede">
+          Homelessness counts are county-wide, but the pressures that cause it are not spread evenly.
+          This map uses open data from the <a href="https://mcmap.org/qol" target="_blank" rel="noopener">Charlotte-Mecklenburg Quality of Life Explorer</a>
+          for 459 Neighborhood Profile Areas (NPAs). Pick a measure, then hover over or tap a neighborhood.
+        </p>
+
+        <div class="qol-controls" role="group" aria-label="Choose a measure" id="qolMetrics"></div>
+
+        <div class="qol-grid">
+          <figure class="qol-map-card">
+            <div class="qol-map-head">
+              <div>
+                <h3 id="qolTitle"></h3>
+                <p id="qolSubtitle" class="muted"></p>
+              </div>
+              <div class="qol-year" id="qolYearWrap">
+                <label for="qolYear">Year: <b id="qolYearLabel"></b></label>
+                <input type="range" id="qolYear" min="0" max="0" step="1" value="0">
+              </div>
+            </div>
+            <div id="qolMap" class="qol-map"></div>
+            <div class="qol-legend" id="qolLegend" aria-label="Map legend"></div>
+            <p class="chart-note">Five groups with about the same number of neighborhoods each (quintiles). When many neighborhoods have none, "None" gets its own group. Gray = no data. Map and data: Quality of Life Explorer, open data under the MIT License.</p>
+          </figure>
+
+          <aside class="qol-side">
+            <div class="qol-panel" id="qolInfo" aria-live="polite"></div>
+            <div class="qol-panel" id="qolPinned" aria-live="polite"></div>
+            <div class="qol-panel caution">
+              <h4>Using this map responsibly</h4>
+              <p>Maps of need can stigmatize neighborhoods. This one is for deciding where to <em>send help</em>, such as outreach, rental assistance, and preserving affordable housing. It is not for labeling places or people. All data is neighborhood totals; no individual is identified.</p>
+            </div>
+          </aside>
+        </div>
+
+        <details class="table-view">
+          <summary>View the 15 neighborhoods with the highest need on this measure</summary>
+          <div id="qolTable"></div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY ============ -->
+    <section id="journey" class="section">
+      <div class="wrap">
+        <p class="eyebrow">03 · The human journey</p>
+        <h2>How someone loses housing — and where we could step in</h2>
+        <p class="section-lede">
+          Human-centered design starts with people, not technology. This journey follows a
+          <strong>composite, fictional</strong> person — built from the local data patterns above, not a real individual.
+          Each stage shows a real statistic and the solution on our map that could intervene. Select a stage.
+        </p>
+        <ol class="journey" id="journeyList"></ol>
+        <div class="journey-detail" id="journeyDetail" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ SOLUTION MAP ============ -->
+    <section id="map" class="section alt">
+      <div class="wrap">
+        <p class="eyebrow">04 · The solution map</p>
+        <h2>From root causes to human-centered solutions</h2>
+        <p class="section-lede">
+          Select a <strong>cause</strong> to see which solutions address it, or a <strong>solution</strong>
+          to see what it tackles, where AI helps, and where people stay in charge.
+        </p>
+
+        <div class="map-shell">
+          <div class="map-col" id="causeCol" aria-label="Causes">
+            <h3 class="col-title">Root causes</h3>
+          </div>
+          <svg class="map-links" id="mapLinks" aria-hidden="true"></svg>
+          <div class="map-col" id="solutionCol" aria-label="Solutions">
+            <h3 class="col-title">Solutions</h3>
+          </div>
+        </div>
+
+        <div class="detail-panel" id="detailPanel" aria-live="polite"></div>
+
+        <div class="hcai-matrix-wrap">
+          <h3>Where does each solution sit?</h3>
+          <p class="muted">Ben Shneiderman's human-centered AI framework says the goal isn't less automation — it's <em>high automation and high human control</em> together. Our placement estimates are shown below; hover or tap a dot.</p>
+          <div id="hcaiMatrix" class="chart" role="img" aria-label="Scatter plot of solutions by level of automation and level of human control. All solutions sit in the high human control half."></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRINCIPLES ============ -->
+    <section id="principles" class="section">
+      <div class="wrap">
+        <p class="eyebrow">05 · Human-centered AI</p>
+        <h2>Our design rules</h2>
+        <div class="principles">
+          <article>
+            <h3>1 · Nothing about us without us</h3>
+            <p>People with lived experience of homelessness are paid co-designers and reviewers, not test subjects. They can stop a tool.</p>
+          </article>
+          <article>
+            <h3>2 · A human is always one tap away</h3>
+            <p>Every AI tool has a clear hand-off to a real person. Danger, children at risk, or legal decisions always go to humans.</p>
+          </article>
+          <article>
+            <h3>3 · Never invent facts</h3>
+            <p>LLMs can “hallucinate.” A wrong phone number or address can cost someone a night outside, so tools answer only from verified, dated resource lists.</p>
+          </article>
+          <article>
+            <h3>4 · Protect privacy and dignity</h3>
+            <p>Collect the minimum. No individual “risk scores.” Data never leaves approved systems. Use person-first language: “people experiencing homelessness.”</p>
+          </article>
+          <article>
+            <h3>5 · Design for real conditions</h3>
+            <p>Works on a basic phone by text, on slow data, with a cracked screen and a dying battery. Plain language at a 6th-grade level, English and Spanish.</p>
+          </article>
+          <article>
+            <h3>6 · Check for unequal outcomes</h3>
+            <p>Black residents are 74% of people experiencing homelessness here. Every tool is tested for whether it serves everyone equally — and paused if it doesn't.</p>
+          </article>
+          <article>
+            <h3>7 · Use AI only where it helps</h3>
+            <p>Some problems need a shared spreadsheet, more shelter beds, or more affordable homes — not a chatbot. AI can't build housing.</p>
+          </article>
+          <article>
+            <h3>8 · Measure outcomes for people</h3>
+            <p>Success is people housed faster and fewer people entering homelessness — not chatbot usage or “engagement.”</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROTOTYPE ============ -->
+    <section id="prototype" class="section alt">
+      <div class="wrap">
+        <p class="eyebrow">06 · Prototype</p>
+        <h2>“Where do I start?” — a navigator prototype</h2>
+        <p class="section-lede">
+          A low-fidelity prototype of Solution 3. On purpose, this version is <strong>rule-based, not an LLM</strong>:
+          it can only show resources we verified, so it can't make up a phone number. The panel on the right
+          shows how an LLM version would be guarded.
+        </p>
+
+        <div class="proto-grid">
+          <div class="phone" aria-label="Navigator prototype">
+            <div class="phone-screen">
+              <p class="phone-q">What's happening right now?</p>
+              <div class="choices" id="navChoices"></div>
+              <div class="nav-result" id="navResult" aria-live="polite"></div>
+              <p class="phone-foot">Class prototype. Resources verified Nov. 2026 — always confirm hours with the provider.</p>
+            </div>
+          </div>
+
+          <div class="prompt-card">
+            <h3>If we used an LLM: the guardrail prompt</h3>
+            <p class="muted">A system prompt is the instruction an LLM follows. Ours puts human-centered rules into the model's instructions — but prompts alone aren't enough, so the app also checks every reply against the verified list before showing it.</p>
+<pre><code>You are a resource navigator for people facing
+homelessness in Mecklenburg County, NC.
+
+RULES
+1. Only share resources from VERIFIED_RESOURCES.
+   Never invent a phone number, address, or hour.
+   If nothing fits, say so and offer NC 211.
+2. If the person mentions danger, self-harm, abuse,
+   or a child at risk: give 911 / 988 first and
+   flag the chat for a human right away.
+3. Write at a 6th-grade reading level. Short
+   sentences. Reply in the person's language.
+4. Never give legal advice or predict a court
+   outcome. Connect to Legal Aid instead.
+5. Ask for the minimum: no names, SSNs, or
+   immigration status.
+6. Be warm and respectful. Use "people
+   experiencing homelessness," never "the
+   homeless." Never judge.
+7. End every reply with: "Want to talk to a
+   person? Reply HUMAN."</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOURCES ============ -->
+    <section id="sources" class="section">
+      <div class="wrap">
+        <p class="eyebrow">07 · Sources &amp; method</p>
+        <h2>Where this data comes from</h2>
+        <p class="section-lede">
+          The main public data hub is the
+          <a href="https://mecklenburghousingdata.org/" target="_blank" rel="noopener">Charlotte-Mecklenburg Housing &amp; Homelessness Dashboard</a>,
+          run by Mecklenburg County Community Support Services with the UNC Charlotte Urban Institute. Its
+          annual <em>State of Housing Instability &amp; Homelessness (SoHIH)</em> report, Point-in-Time Count pages,
+          One Number data, and Ecosystem directory are the backbone of this project. Neighborhood data comes from the
+          <a href="https://mcmap.org/qol" target="_blank" rel="noopener">Quality of Life Explorer</a> (UNC Charlotte Urban Institute, City of Charlotte, and Mecklenburg County), using its
+          <a href="https://github.com/tobinbradley/quality-of-life-explorer" target="_blank" rel="noopener">open-data repository</a>. Figures were checked on November 10, 2026.
+        </p>
+        <ol class="source-list" id="sourceList"></ol>
+
+        <div class="ai-statement">
+          <h3>AI use statement</h3>
+          <p>
+            This site was drafted with help from an AI assistant (Claude), which searched for public sources,
+            compiled the dataset, and wrote the code. Every figure links to its source so it can be checked.
+            Our team reviewed the content, and the design decisions — what to include, what AI should and
+            shouldn't do — are ours. <em>(Students: edit this to describe exactly how your team used AI.)</em>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Class project on human-centered AI · Data is public and cited above · Not an official county resource.</p>
+      <p>If you need help: dial <a href="tel:211">2-1-1</a> or call Coordinated Entry at <a href="tel:7042849665">704-284-9665</a>.</p>
+    </div>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+
+  <script src="data.js"></script>
+  <script src="qol-data.js"></script>
+  <script src="app.js"></script>
+  <script src="qol-map.js"></script>
+</body>
+</html>
