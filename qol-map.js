@@ -81,18 +81,26 @@
     const year = m.years[yi];
     return { m, yi, year, vals: m.values[year], county: m.county[year] };
   }
-  // Quintile breaks; if many neighborhoods are exactly 0, give zero its own class
-  // and split the rest into quartiles.
-  function quintiles(arr) {
-    const s = arr.slice().sort((a, b) => a - b);
-    const zeros = s.filter((v) => v === 0).length;
-    if (zeros / s.length > 0.15) {
-      const pos = s.filter((v) => v > 0);
-      return [0, ...[0.25, 0.5, 0.75].map((q) => pos[Math.floor(q * (pos.length - 1))])];
+  // Color classes ordered from least to most pressure. The top fifth is split
+  // further (80-90th, 90-95th, 95-100th percentile) so the highest-pressure
+  // neighborhoods stand out instead of blending into one dark group.
+  // For "lower = more pressure" measures (income, internet, ownership) the
+  // scale is flipped so the darkest color always means the most pressure.
+  const TAIL = [0.2, 0.4, 0.6, 0.8, 0.9, 0.95];
+  const TAGS = ["", "", "", "", "Top 10–20%", "Top 5–10%", "Top 5%"];
+  function makeClasses(m, nums) {
+    const dir = m.need === "low" ? -1 : 1;
+    const at = (arr, q) => arr[Math.floor(q * (arr.length - 1))];
+    const p = nums.map((v) => v * dir).sort((a, b) => a - b);
+    const zeros = nums.filter((v) => v === 0).length;
+    if (dir === 1 && zeros / nums.length > 0.15) {
+      const pos = p.filter((v) => v > 0);
+      return { dir, zero: true, min: p[0], minPos: pos[0], max: p[p.length - 1],
+               br: [0, ...[0.25, 0.5, 0.75, 0.9, 0.95].map((q) => at(pos, q))] };
     }
-    return [0.2, 0.4, 0.6, 0.8].map((q) => s[Math.floor(q * (s.length - 1))]);
+    return { dir, zero: false, min: p[0], max: p[p.length - 1], br: TAIL.map((q) => at(p, q)) };
   }
-  function cls(v, br) { let k = 0; while (k < br.length && v > br[k]) k++; return k; }
+  function cls(v, c) { const x = v * c.dir; let k = 0; while (k < c.br.length && x > c.br[k]) k++; return k; }
   function needRanked(m, vals) {
     const ids = Object.keys(vals);
     if (m.need === "low") ids.sort((a, b) => vals[a] - vals[b]);
@@ -115,30 +123,36 @@
 
     // fill
     const nums = Object.values(vals);
-    const br = quintiles(nums);
+    const cl = makeClasses(m, nums);
     const ranked = needRanked(m, vals);
     const topSet = new Set(m.need === "neutral" ? [] : ranked.slice(0, Math.round(ranked.length * 0.1)));
     Object.entries(pathById).forEach(([id, p]) => {
       const v = vals[id];
       if (v === undefined) { p.setAttribute("class", "npa npa-nodata"); p.style.fill = ""; }
       else {
-        p.style.fill = `var(--q${cls(v, br) + 1})`;
+        p.style.fill = `var(--q${cls(v, cl) + 1})`;
         p.setAttribute("class", "npa" + (state.top && topSet.has(id) ? " top-need" : "") + (state.pinned === id ? " pinned" : ""));
       }
     });
     if (state.top) topSet.forEach((id) => gPolys.appendChild(pathById[id]));
     if (state.pinned) gPolys.appendChild(pathById[state.pinned]);
 
-    // legend
-    const mn = Math.min(...nums), mx = Math.max(...nums);
-    const edges = [mn, ...br, mx];
+    // legend (least -> most pressure)
+    const edges = [cl.min, ...cl.br, cl.max];
     let lg = "";
-    for (let k = 0; k < 5; k++) {
-      const label = (k === 0 && br[0] === 0 && mn === 0) ? "None" : `${fmtShort(k === 1 && br[0] === 0 ? Math.min(...nums.filter((v) => v > 0)) : edges[k], m.format)}–${fmtShort(edges[k + 1], m.format)}`;
-      lg += `<div class="lg"><i style="background:var(--q${k + 1})"></i><span>${label}</span></div>`;
+    for (let k = 0; k < 7; k++) {
+      let label;
+      if (k === 0 && cl.zero) label = "None";
+      else {
+        const lo = (k === 1 && cl.zero ? cl.minPos : edges[k]) * cl.dir, hi = edges[k + 1] * cl.dir;
+        label = `${fmtShort(Math.min(lo, hi), m.format)}–${fmtShort(Math.max(lo, hi), m.format)}`;
+      }
+      const tag = cl.zero ? "" : TAGS[k];
+      lg += `<div class="lg"><i style="background:var(--q${k + 1})"></i><span>${label}</span>${tag ? `<em>${tag}</em>` : ""}</div>`;
     }
     lg += `<div class="lg nd"><i style="background:var(--nodata)"></i><span>No data</span></div>`;
-    $("#qolLegend").innerHTML = lg;
+    const ends = m.need === "neutral" ? ["Lower", "Higher"] : ["Less pressure", "More pressure"];
+    $("#qolLegend").innerHTML = `<div class="lg-scale"><span>← ${ends[0]}</span><span>${ends[1]} →</span></div><div class="lg-row">${lg}</div>`;
 
     // info panel
     const needText = m.need === "high" ? "Higher values = more pressure" : m.need === "low" ? "Lower values = more pressure" : "Context measure (neither high nor low is 'bad')";
